@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 # Import modules
 
 # Tkinter for GUI window
@@ -6,19 +7,26 @@ import tkinter as tk
 from tkinter import ttk
 # OS for system interaction
 import os
+# Threading for multithreading for updating
+import threading
+# Time for wait commands
+import time
 
 # System Vars
-usbs = os.popen("cat /etc/os-release").read()
-pings = os.popen("lsusb").read()
-
+ram = os.popen("free -h").read()
 
 # Methods
 def close():
     root.quit()
 
 def update():
-    thecmd = os.popen("lsusb").read()
-    lsusb.config(text = thecmd)
+    thecmd = os.popen("free -h").read()
+    freeram.config(text = thecmd)
+
+def continueupdate():
+    while True:
+        update()
+        time.sleep(0.1)
 
 # Main code start
 
@@ -39,11 +47,8 @@ tabtitle = ["Home", "Main Power", "Auxillary Power"]
 for i in range(len(tabs)):
     tabControl.add(tabs[i], text = tabtitle[i])
 
-lsusb = tk.Label(homeTab, text=pings, font = ("Times", 10))
-lsusb.grid(column = 0, row = 5, padx = 10, pady = 10)
-
-the_button = tk.Button(homeTab, text="update", command = update)
-the_button.grid(column = 1, row = 10, padx = 10, pady = 10)
+freeram = tk.Label(homeTab, text=ram, font = ("Times", 10))
+freeram.grid(column = 0, row = 5, padx = 10, pady = 10)
 
 exit_button = tk.Button(homeTab, text="Exit", font=("Times", 10), command=close)
 exit_button.grid(column = 10, row = 10, padx = 10, pady = 10)
@@ -51,15 +56,5 @@ exit_button.grid(column = 10, row = 10, padx = 10, pady = 10)
 # End Assembly
 tabControl.grid(column = 1, row = 0, padx = 10, pady = 10)
 
-def updater():
-    try:
-        ping2 = os.popen("lsusb").read()
-        if pings != ping2:
-            update()
-            pings = os.popen("lsusb")
-        ping2 = os.popen("lsusb").read()
-    except NameError:
-        pings = os.popen("lsusb").read()
-
-root.after(1000, updater())
+threading.Thread(target=continueupdate).start()
 root.mainloop()
