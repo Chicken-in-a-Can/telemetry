@@ -81,7 +81,7 @@ auxTab = ttk.Frame(tabControl)
 # Place tabs in array for convenient adding to notebook
 # Tabs in tabs and tabtitle must match indexes
 tabs = [homeTab, powerTab, auxTab]
-tabtitle = ["Home", "Main Power", "Auxillary Power"]
+tabtitle = ["Home", "Main Power", "Auxiliary Power"]
 
 # Add tabs to notebook through for loop
 for i in range(len(tabs)):
@@ -106,7 +106,7 @@ home_info_one.grid(column = 0, row = 5, padx = 10, pady = 10)
 main_power_info_one = tk.Label(powerTab, text=no_update_str, font = ("Times", 10))
 main_power_info_one.grid(column = 0, row = 5, padx = 10, pady = 10)
 
-# Auxillary Power Tab
+# Auxiliary Power Tab
 
 # First info label on main power tab. Plain text
 aux_power_info_one = tk.Label(auxTab, text=no_update_str, font = ("Times", 10))
