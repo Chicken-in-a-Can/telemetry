@@ -11,6 +11,9 @@ import os
 import threading
 # Time for wait commands to reduce system load
 import time
+# Import from my infomethods file
+from infomethods import Network as netw
+from infomethods import Devices as dev
 
 # Define basic variables
 no_update_str = "Tab hasn't currently updated. Oopsies"
@@ -23,12 +26,12 @@ def close():
 
 # Update home tab. Update all text labels on home tab
 def update_home():
-    thecmd = os.popen("free -h").read()
+    thecmd = netw.netlist()
     home_info_one.config(text = thecmd)
 
 # Update main power tab. Update all text labels on main power tab
 def update_main_power():
-    thecmd = os.popen("date +'TIME: %T'").read()
+    thecmd = dev.devlist()
     main_power_info_one.config(text = thecmd)
 
 # Update aux power tab. Update all text labels on aux power tab
